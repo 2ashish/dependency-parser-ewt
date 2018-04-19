@@ -8,17 +8,6 @@ import math
 from keras.utils.np_utils import to_categorical
 
 
-class Embedding(object):
-	def __init__(self, word2vec):
-		self.word2vec = word2vec
-		self.dim = 50
-
-	def transform(self, X):
-		return np.array([
-			np.concatenate([self.word2vec[w] for w in X if w in self.word2vec]
-					or [np.zeros(self.dim)], axis=0)
-		])
-
 def loadGloveModel(gloveFile):
     #print "Loading Glove Model..."
     f = open(gloveFile,'r')
@@ -86,7 +75,7 @@ def extract_features(words, config):
 
 
 
-st = open('train.conllu').read().strip().split('\n\n')
+st = open('data/en_ewt-ud-train.conllu').read().strip().split('\n\n')
 feat ,transit = [], []
 z=0;
 for sent in st:
@@ -158,7 +147,7 @@ for sent in st:
 print(len(feat),25)
 
 GloveDimOption = '50' # this  could be 50 (171.4 MB), 100 (347.1 MB), 200 (693.4 MB), or 300 (1 GB)
-embeddings_index = loadGloveModel('glove.6B.' + GloveDimOption + 'd.txt') 
+embeddings_index = loadGloveModel('data/glove.6B.' + GloveDimOption + 'd.txt') 
 
 # print(embeddings_index['apple'])
 # print(embeddings_index['mango'])
